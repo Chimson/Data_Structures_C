@@ -1,4 +1,4 @@
-#include <stdio.h>  // sprintf
+#include <stdio.h>  // printf, sprintf
 #include <stdlib.h>  // malloc, free
 #include <string.h>  // strcat, memcpy
 
@@ -56,7 +56,7 @@ void change_arrs(int* ints1, int ints2[]) {
 // you can initialize objects after the definition } (not shown)
 struct iarray {
   int* arr;
-  void (*add) (struct iarray*, int, int);  // function pointer
+  void (*add) (struct iarray *, int, int);  // function pointer
 };
 void add_to_iarray(struct iarray* iarr, int i, int val) {
   iarr->arr[i] = val;
@@ -103,7 +103,7 @@ static void IntArraySetInitFields(IntArray* ia) {
 
 
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char* argv[]) {
   
   // memory info
   // int is stored in 4 bytes
@@ -113,7 +113,7 @@ int main(int argc, const char * argv[]) {
   
   // normal pointer (on STACK)
   int val = 0xAFEF;
-  int* val_ptr = &val;  // addr operator &
+  int *val_ptr = &val;  // addr operator &
   *val_ptr = 0xAAAA;  // assign value by deref
   printf("%d\n", val);  // int value of val variable
   printf("int is %zu bytes\n", sizeof(val));   // %zu is unsigned size_t type
@@ -173,7 +173,7 @@ int main(int argc, const char * argv[]) {
   // needs cast before you dereference, but there is ptr arithmetic
   // void* + 1 is one byte forward
   // void* points to one void value or an array of void values
-  void* vptr = (void*) one;
+  void *vptr = (void*) one;
   printf("%p\n", vptr);
   printf("%p\n", vptr + 1);
   
@@ -193,11 +193,11 @@ int main(int argc, const char * argv[]) {
   printf("%d\n", *((*myiarr_ptr).arr) ); // first value
   printf("%d\n", (*myiarr_ptr).arr[0] ); // first value
   
-  printf("%\n");
+  printf("\n");
 
   // test the resizing array
   IntArray iarr2;  // garbage
-  IntArray* iarr2_ptr = &iarr2;
+  IntArray *iarr2_ptr = &iarr2;
   IntArraySetInitFields(iarr2_ptr);
   iarr2_ptr->add(iarr2_ptr, 1);
   iarr2_ptr->add(iarr2_ptr, 2);
@@ -214,6 +214,7 @@ int main(int argc, const char * argv[]) {
   ARR_STR(iarr2_ptr->arr, iarr2_ptr->cur + 1, "%d", iarr2str);
   printf("%s\n", iarr2str);
   
+  printf("\n");
   free(iarr2_ptr->arr);
   free(iarr2str);
   free(iarr_str);
