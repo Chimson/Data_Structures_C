@@ -6,8 +6,11 @@
 
 
 // allocates space for the stack fields and the array
-// base is a pointer to the first byte, very bottom of the stack
+// base is a pointer to the first byte of the stack
 // top is a pointer to the byte just after any element in the stack
+//   like right at the first byte to insert a new item in the stack
+// size is the initial memory size, not current size, so it should
+//   never update
 fixed_stack* create_fixed_stack(int size) {
   fixed_stack *st = (fixed_stack*) malloc(sizeof(fixed_stack));
   st->base = (ITEM_TYPE*) malloc(st->size * sizeof(ITEM_TYPE));
@@ -45,10 +48,12 @@ ITEM_TYPE fs_pop(fixed_stack* fs) {
   return *(fs->top);
 }
 
+// does not remove the top
 ITEM_TYPE fs_peek(fixed_stack* fs) {
   return *(fs->top - 1);  // temp looks at the value
 }
 
+// frees the heap memory
 void fs_remove(fixed_stack* fs) {
   free(fs->base);
   free(fs);
