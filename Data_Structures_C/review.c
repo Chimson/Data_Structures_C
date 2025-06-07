@@ -102,8 +102,8 @@ static void IntArraySetInitFields(IntArray* ia) {
 }
 
 
-
-int main(int argc, const char* argv[]) {
+// you can only have one main function
+int another_main(int argc, const char* argv[]) {
   
   // memory info
   // int is stored in 4 bytes
