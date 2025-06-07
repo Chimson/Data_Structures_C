@@ -20,8 +20,10 @@ int main(int argc, char** argv) {
   assert(fs->size == 5);
   assert(fs->is_empty(fs) == 0);
   
+  // TODO:
   // finish a few more tests
-  
+  // maybe try to make a macro that will produce a stack of a type I
+  //   want, possibly allow for more than one type
   
   return 0;
 }
