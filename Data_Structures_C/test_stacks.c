@@ -1,13 +1,23 @@
 #include "stacks.h"
 #include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 // I can't exhaustively test everything
 // test a few simple operations and check their states
 // then do a mix of several operations and check its state at the end
 
+// Here is the macro version for type
+//   independent stacks, at least per type
+// could also do this with Node's that have a void pointer
+
+// macro to generate the code for two stacks of different
+//   types
+STACK(long)
+STACK(double)
+
 int main(int argc, char** argv) {
-  
+
   fixed_stack* fs = create_fixed_stack(5);
   assert(fs->is_empty(fs) == 1);
   fs->push(fs, 0);
@@ -71,9 +81,16 @@ int main(int argc, char** argv) {
   
   printf("All tests pass!\n");
   
+  long_fixed_stack* lfs = long_create_fixed_stack(10);
+  lfs->push(lfs, 0xFFFFFFFFFF);
+  assert(lfs->pop(lfs) == 0xFFFFFFFFFF);
+  
+  double_fixed_stack* dfs = double_create_fixed_stack(10);
+  dfs->push(dfs, 0xFFFFFFFFFF);
+  assert(dfs->pop(dfs) == 0xFFFFFFFFFF);
+  
   // TODO:
-  // maybe try to make a macro that will produce a stack of a type I
-  //   want, possibly allow for more than one type
+  //   try to do a version that holds a stack of pointers
   
   printf("\n");
   return 0;
