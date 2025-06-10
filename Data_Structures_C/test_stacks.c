@@ -79,7 +79,7 @@ int main(int argc, char** argv) {
   fs->remove(fs);
   fs = NULL;
   
-  printf("All tests pass!\n");
+  
   
   long_fixed_stack* lfs = long_create_fixed_stack(10);
   lfs->push(lfs, 0xFFFFFFFFFF);
@@ -91,6 +91,8 @@ int main(int argc, char** argv) {
   
   // TODO:
   //   try to do a version that holds a stack of pointers
+  
+  printf("All tests pass!\n");
   
   printf("\n");
   return 0;

@@ -5,8 +5,8 @@
 #define ITEM_TYPE int
 
 typedef struct fs {
-  ITEM_TYPE *base;  // points to the beginning of the stack array
-  ITEM_TYPE *top;
+  ITEM_TYPE* base;  // points to the beginning of the stack array
+  ITEM_TYPE* top;
   int size;
   int (*is_empty)(struct fs*);
   int (*push)(struct fs*, ITEM_TYPE);
@@ -24,12 +24,13 @@ ITEM_TYPE fs_peek(fixed_stack* fs);
 void fs_remove(fixed_stack* fs);
 
 // Macro that you can use to generate a fixed stack for any type
+//   difficult to debug
 // I do this once to show that it can be done, but I won't
 //   do this for every data stucture
 // I pre-append TYPE to all the names, for multiple stacks using ##
-// may be better to just copy manually or use a node with a void*
+// may be better to just copy the code manually or use a node with a void*
 #define STACK(TYPE) \
-  typedef struct TYPE##_fs { \
+typedef struct TYPE##_fs { \
     TYPE *base;  \
     TYPE *top; \
     int size; \
