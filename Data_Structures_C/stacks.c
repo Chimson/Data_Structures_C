@@ -5,27 +5,6 @@
 #include "stacks.h"
 
 
-// allocates space for the stack fields and the array
-// base is a pointer to the first byte of the stack
-// top is a pointer to the byte just after any element in the stack
-//   like right at the first byte to insert a new item in the stack
-// size is the initial memory size, not current size, so it should
-//   never update
-fixed_stack* create_fixed_stack(int size) {
-  fixed_stack *st = (fixed_stack*) malloc(sizeof(fixed_stack));
-  st->base = (ITEM_TYPE*) malloc(st->size * sizeof(ITEM_TYPE));
-  st->top = st->base;
-  st->size = size;
-  
-  // set the function pointers
-  st->is_empty = fs_empty;
-  st->push = fs_push;
-  st->pop = fs_pop;
-  st->peek = fs_peek;
-  st->remove = fs_remove;
-  return st;
-}
-
 // when the pointers haven't moved
 int fs_empty(fixed_stack* fs) {
   return fs->base == fs->top;
@@ -59,9 +38,27 @@ void fs_remove(fixed_stack* fs) {
   free(fs);
 }
 
-// ====
+// allocates space for the stack fields and the array
+// base is a pointer to the first byte of the stack
+// top is a pointer to the byte just after any element in the stack
+//   like right at the first byte to insert a new item in the stack
+// size is the initial memory size, not current size, so it should
+//   never update
+fixed_stack* create_fixed_stack(int size) {
+  fixed_stack* st = (fixed_stack*) malloc(sizeof(fixed_stack));
+  st->base = (ITEM_TYPE*) malloc(size * sizeof(ITEM_TYPE));
+  st->top = st->base;
+  st->size = size;
+  
+  // set the function pointers
+  st->is_empty = fs_empty;
+  st->push = fs_push;
+  st->pop = fs_pop;
+  st->peek = fs_peek;
+  st->remove = fs_remove;
+  return st;
+}
 
-
-
+// =====
 
 #endif

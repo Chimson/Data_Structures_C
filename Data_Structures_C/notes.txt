@@ -1,0 +1,47 @@
+TODO:
+  try to recreate the macro easily using the steps below
+  add in book notes from stacks
+  
+Remarks about generic types:
+  one macro generating a data structure for different types
+    basically means you are only writing in macros
+  using void pointers eventually forces you to cast to a type
+    I tried this but it led me to writing a Type class and read
+      and write functions, which then became "non-C"
+  Solution may be to write one concrete class with an ITEM_TYPE
+    this allows exactly one class with any type of your choosing
+    can copy this class and rename for more than one concreate
+      structure usable with different types
+  You can turn this ITEM_TYPE solution pretty easily into a macro
+    so if you debug one then you only have to debug one more which
+      isn't that bad
+    can simplify this by ordering it a way that allows removing
+      function prototypes, since its generated in the main file
+    Basically copy into macro like this:
+      struct definition
+      non-constructor functions
+        constructor will assign other functions as "methods"
+      constructor function
+    Need to copy/paste ITEM_TYPE##_ to each func/struct
+      name
+    macro has to append TYPE via ## to each name:
+      new struct name in the def
+      the new struct name in each of the method pointer args
+      the new typedef name
+      each new function name and first arg for the new typedef
+        name
+      each function return that returns a new typedef name
+      inside the constructor, in new typedef name, and
+        assigning functions to the method pointers
+    Easiest way to do this: use the search replace in text editor
+      replace old struct name with new appended struct name
+      replace old typedef name with new appended typedef name
+      replace ; with ; \
+      add the other ends of lines with \
+      replace the function names manually
+    removing the "methods" for each struct might make the macro easier
+      to write, but would make the functions called on the struct
+      difficult to call with tests, since they would have different
+        names per typ
+      
+  Text Notes:

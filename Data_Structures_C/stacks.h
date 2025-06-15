@@ -8,6 +8,8 @@ typedef struct fs {
   ITEM_TYPE* base;  // points to the beginning of the stack array
   ITEM_TYPE* top;
   int size;
+  
+  // methods
   int (*is_empty)(struct fs*);
   int (*push)(struct fs*, ITEM_TYPE);
   ITEM_TYPE (*pop)(struct fs*);
@@ -15,7 +17,8 @@ typedef struct fs {
   void (*remove)(struct fs*);
 } fixed_stack;
 
-// functions used to set to the stack pointers
+// function prototypes used to set to the stack pointers
+// need these for main file
 fixed_stack* create_fixed_stack(int size);
 int fs_empty(fixed_stack* fs);
 int fs_push(fixed_stack* fs, ITEM_TYPE x);
@@ -29,39 +32,23 @@ void fs_remove(fixed_stack* fs);
 //   do this for every data stucture
 // I pre-append TYPE to all the names, for multiple stacks using ##
 // may be better to just copy the code manually or use a node with a void*
-#define STACK(TYPE) \
-typedef struct TYPE##_fs { \
-    TYPE *base;  \
-    TYPE *top; \
+// function prototypes were removed by placing the create function
+//   at the end, since this will be written in the main file
+#define STACK(ITEM_TYPE) \
+  typedef struct ITEM_TYPE##_fs { \
+    ITEM_TYPE *base;  \
+    ITEM_TYPE *top; \
     int size; \
-  int (*is_empty)(struct TYPE##_fs*); \
-  int (*push)(struct TYPE##_fs*, TYPE); \
-  TYPE (*pop)(struct TYPE##_fs*); \
-  TYPE (*peek)(struct TYPE##_fs*); \
-  void (*remove)(struct TYPE##_fs*); \
-  } TYPE##_fixed_stack; \
-  TYPE##_fixed_stack* TYPE##_create_fixed_stack(int size); \
-  int TYPE##_fs_empty(TYPE##_fixed_stack* fs); \
-  int TYPE##_fs_push(TYPE##_fixed_stack* fs, TYPE x); \
-  TYPE TYPE##_fs_pop(TYPE##_fixed_stack* fs); \
-  TYPE TYPE##_fs_peek(TYPE##_fixed_stack* fs); \
-  void TYPE##_fs_remove(TYPE##_fixed_stack* fs); \
-  TYPE##_fixed_stack* TYPE##_create_fixed_stack(int size) { \
-  TYPE##_fixed_stack *st = (TYPE##_fixed_stack*) malloc(sizeof(TYPE##_fixed_stack)); \
-    st->base = (TYPE*) malloc(st->size * sizeof(TYPE)); \
-    st->top = st->base; \
-    st->size = size; \
-  st->is_empty = TYPE##_fs_empty; \
-  st->push = TYPE##_fs_push; \
-  st->pop = TYPE##_fs_pop; \
-  st->peek = TYPE##_fs_peek; \
-  st->remove = TYPE##_fs_remove; \
-    return st; \
-  } \
-  int TYPE##_fs_empty(TYPE##_fixed_stack* fs) { \
+    int (*is_empty)(struct ITEM_TYPE##_fs*); \
+    int (*push)(struct ITEM_TYPE##_fs*, ITEM_TYPE); \
+    ITEM_TYPE (*pop)(struct ITEM_TYPE##_fs*); \
+    ITEM_TYPE (*peek)(struct ITEM_TYPE##_fs*); \
+    void (*remove)(struct ITEM_TYPE##_fs*); \
+  } ITEM_TYPE##_fixed_stack; \
+  int ITEM_TYPE##_fs_empty(ITEM_TYPE##_fixed_stack* fs) { \
     return fs->base == fs->top; \
   } \
-  int TYPE##_fs_push(TYPE##_fixed_stack* fs, TYPE x) { \
+  int ITEM_TYPE##_fs_push(ITEM_TYPE##_fixed_stack* fs, ITEM_TYPE x) { \
     if (fs->top < fs->base + fs->size) { \
       *(fs->top) = x; \
       fs->top += 1; \
@@ -71,17 +58,30 @@ typedef struct TYPE##_fs { \
       return -1; \
     } \
   } \
-  TYPE TYPE##_fs_pop(TYPE##_fixed_stack* fs) { \
+  ITEM_TYPE ITEM_TYPE##_fs_pop(ITEM_TYPE##_fixed_stack* fs) { \
     fs->top -= 1; \
     return *(fs->top); \
   } \
-  TYPE TYPE##_fs_peek(TYPE##_fixed_stack* fs) { \
+  ITEM_TYPE ITEM_TYPE##_fs_peek(ITEM_TYPE##_fixed_stack* fs) { \
     return *(fs->top - 1);  \
   } \
-  void TYPE##_fs_remove(TYPE##_fixed_stack* fs) { \
+  void ITEM_TYPE##_fs_remove(ITEM_TYPE##_fixed_stack* fs) { \
     free(fs->base); \
     free(fs); \
-  }
+  }\
+ ITEM_TYPE##_fixed_stack* ITEM_TYPE##_create_fixed_stack(int size) { \
+   ITEM_TYPE##_fixed_stack *st = (ITEM_TYPE##_fixed_stack*) \
+      malloc(sizeof(ITEM_TYPE##_fixed_stack)); \
+   st->base = (ITEM_TYPE*) malloc(st->size * sizeof(ITEM_TYPE)); \
+   st->top = st->base; \
+   st->size = size; \
+   st->is_empty = ITEM_TYPE##_fs_empty; \
+   st->push = ITEM_TYPE##_fs_push; \
+   st->pop = ITEM_TYPE##_fs_pop; \
+   st->peek = ITEM_TYPE##_fs_peek; \
+   st->remove = ITEM_TYPE##_fs_remove; \
+   return st; \
+ } \
 
 #endif
 

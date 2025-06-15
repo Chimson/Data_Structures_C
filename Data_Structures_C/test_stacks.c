@@ -80,7 +80,6 @@ int main(int argc, char** argv) {
   fs = NULL;
   
   
-  
   long_fixed_stack* lfs = long_create_fixed_stack(10);
   lfs->push(lfs, 0xFFFFFFFFFF);
   assert(lfs->pop(lfs) == 0xFFFFFFFFFF);
@@ -88,9 +87,6 @@ int main(int argc, char** argv) {
   double_fixed_stack* dfs = double_create_fixed_stack(10);
   dfs->push(dfs, 0xFFFFFFFFFF);
   assert(dfs->pop(dfs) == 0xFFFFFFFFFF);
-  
-  // TODO:
-  //   try to do a version that holds a stack of pointers
   
   printf("All tests pass!\n");
   

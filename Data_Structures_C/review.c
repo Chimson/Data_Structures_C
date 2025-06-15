@@ -214,10 +214,17 @@ int another_main(int argc, const char* argv[]) {
   ARR_STR(iarr2_ptr->arr, iarr2_ptr->cur + 1, "%d", iarr2str);
   printf("%s\n", iarr2str);
   
+  // checks the type on the return of the expression
+  // returns the value based on the type
+  int i = 1;
+  _Generic(i == 1, int: 1, default: 0);
+           
   printf("\n");
   free(iarr2_ptr->arr);
   free(iarr2str);
   free(iarr_str);
   free(farr_str);
   return 0;
+  
+
 }
