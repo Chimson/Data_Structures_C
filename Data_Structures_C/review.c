@@ -171,6 +171,8 @@ int another_main(int argc, const char* argv[]) {
   
   // void* allows some type independent code
   // needs cast before you dereference, but there is ptr arithmetic
+  //   you can always cast to unsigned char* which can help with more
+  //   generic code
   // void* + 1 is one byte forward
   // void* points to one void value or an array of void values
   void *vptr = (void*) one;
@@ -214,7 +216,7 @@ int another_main(int argc, const char* argv[]) {
   ARR_STR(iarr2_ptr->arr, iarr2_ptr->cur + 1, "%d", iarr2str);
   printf("%s\n", iarr2str);
   
-  // checks the type on the return of the expression
+  // _Generic checks the type on the return of the expression
   // returns the value based on the type
   int i = 1;
   _Generic(i == 1, int: 1, default: 0);
