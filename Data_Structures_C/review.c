@@ -103,7 +103,7 @@ static void IntArraySetInitFields(IntArray* ia) {
 
 
 // you can only have one main function
-int another_main(int argc, const char* argv[]) {
+int a_main(int argc, const char* argv[]) {
   
   // memory info
   // int is stored in 4 bytes
@@ -222,6 +222,9 @@ int another_main(int argc, const char* argv[]) {
   _Generic(i == 1, int: 1, default: 0);
            
   printf("\n");
+  
+  // only free pointers that have been directly returned from malloc
+  // free most nested allocation, then parent, etc.
   free(iarr2_ptr->arr);
   free(iarr2str);
   free(iarr_str);

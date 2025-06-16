@@ -79,6 +79,7 @@ int main(int argc, char** argv) {
   fs->remove(fs);
   fs = NULL;
   
+  // try the macro version
   
   long_fixed_stack* lfs = long_create_fixed_stack(10);
   lfs->push(lfs, 0xFFFFFFFFFF);
@@ -88,8 +89,81 @@ int main(int argc, char** argv) {
   dfs->push(dfs, 0xFFFFFFFFFF);
   assert(dfs->pop(dfs) == 0xFFFFFFFFFF);
   
-  printf("All tests pass!\n");
+  // test the generic stack
   
+  generic_stack* is = create_generic_stack(5, sizeof(int));
+  assert(is->is_empty(is) == 1);
+  int val = 0;
+  is->push(is, &val);
+  val = 1 ;
+  is->push(is, &val);
+  val = 2;
+  is->push(is, &val);
+  val = 3;
+  is->push(is, &val);
+  val = 4;
+  is->push(is, &val);
+  int* pval = is->peek(is);
+  assert(*pval == 4);
+  int* bptr = (int*) is->base;
+  assert(*(bptr++) == 0);
+  assert(*(bptr++) == 1);
+  assert(*(bptr++) == 2);
+  assert(*(bptr++) == 3);
+  assert(*(bptr++) == 4);
+  assert(is->size == 5);
+  assert(is->tsize == sizeof(int));
+  assert(is->is_empty(is) == 0);
+  assert(is->base + is->size * is->tsize == is->top);
+
+  // push one past does nothing
+  val = 5;
+  assert(is->push(is, &val) == -1);
+  assert(*(int*)is->peek(is) == 4);
+  assert(is->size == 5);
+  assert(is->base + is->size * is->tsize == is->top);
+  
+  // remove
+  is->remove(is);
+  is = NULL;
+  
+  // mixed pushs and pops
+  is = create_generic_stack(10, sizeof(int));
+  for (int i = 10; i > 0; --i) {
+    int* iptr = &i;
+    is->push(is, iptr);
+  }
+  assert(is->base + is->size * is->tsize == is->top);
+  assert(*(int*)is->peek(is) == 1);
+  assert(is->size == 10);
+  
+  assert(*(int*)is->pop(is) == 1);
+  assert(is->base + 9 * is->tsize == is->top);
+  assert(*(int*)is->peek(is) == 2);
+  assert(is->size == 10); // size ihe capacity not current size
+  
+  val = 11;
+  is->push(is, &val);
+  assert(is->size == 10);
+  assert(is->base + 10 * is->tsize == is->top);
+  assert(*(int*)is->peek(is) == 11);
+  is->pop(is);
+  is->pop(is);
+  val = 12;
+  is->push(is, &val);
+  val = 13;
+  is->push(is, &val);
+  is->pop(is);
+  assert(*(int*)is->pop(is) == 12);
+  assert(*(int*)is->peek(is) == 3);
+  assert(is->base + 8 * is->tsize == is->top);
+  assert(is->size == 10);
+  
+  // remove
+  is->remove(is);
+  is = NULL;
+  
+  printf("All tests pass!\n");
   printf("\n");
   return 0;
 }

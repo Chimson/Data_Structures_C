@@ -1,7 +1,7 @@
 TODO:
-  try to recreate the macro easily using the steps below
   add in book notes from stacks
-  try to make a char*/void* version of stack
+  X try to make a char*/void* version of stack: generic_stack
+  maybe make a fixed stack file
   
 Remarks about generic types:
   one macro generating a data structure for different types
@@ -9,10 +9,13 @@ Remarks about generic types:
   using void pointers eventually forces you to cast to a type
     I tried this but it led me to writing a Type class and read
       and write functions, which then became "non-C"
-    one solution would be to use char* and void*, since you
-      can cast to char*, and its of size 1 byte
-      unsigned char may be better since it is less dependent on
-        implementation
+  DID THIS: one solution would be to use char* and void*, since you
+    can cast to char*, and its of size 1 byte
+    unsigned char may be better since it is less dependent on
+      implementation
+    causes all the type pointer arithmetic to turn into
+      type_size * size
+    can't read/write to void* but you can unsigned char*
   Solution may be to write one concrete class with an ITEM_TYPE
     this allows exactly one class with any type of your choosing
     can copy this class and rename for more than one concreate

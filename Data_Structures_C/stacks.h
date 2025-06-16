@@ -1,6 +1,8 @@
 #ifndef _STACKS_H
 #define _STACKS_H 1
 
+#include <stdlib.h>
+
 // fixed stack
 #define ITEM_TYPE int
 
@@ -82,6 +84,29 @@ void fs_remove(fixed_stack* fs);
    st->remove = ITEM_TYPE##_fs_remove; \
    return st; \
  } \
+
+// struct and prototypes for the generic stack
+typedef struct gfs {
+  void* base;
+  void* top;
+  int size;
+  size_t tsize;
+  
+  // function pointers
+  int (*push)(struct gfs*, void* item);
+  int (*is_empty)(struct gfs*);
+  void* (*peek)(struct gfs*);
+  void (*remove)(struct gfs*);
+  void* (*pop)(struct gfs*);
+} generic_stack;
+
+int gfs_empty(generic_stack* gfs);
+int gfs_push(generic_stack* gfs, void* item);
+void* gfs_peek(generic_stack* gfs);
+void gfs_remove(generic_stack* gfs);
+void* gfs_pop(generic_stack* gfs);
+generic_stack* create_generic_stack(int size, size_t tsize);
+
 
 #endif
 
