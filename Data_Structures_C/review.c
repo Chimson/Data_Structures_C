@@ -1,6 +1,8 @@
+#include "define_main.h"
 #include <stdio.h>  // printf, sprintf
 #include <stdlib.h>  // malloc, free
 #include <string.h>  // strcat, memcpy
+
 
 // documentation on C functions, printf for example
 // $ man 3 printf
@@ -103,7 +105,11 @@ static void IntArraySetInitFields(IntArray* ia) {
 
 
 // you can only have one main function
-int a_main(int argc, const char* argv[]) {
+// However I use define_main.h to conditionally compile the individual main
+
+#ifdef REVIEW
+
+int main(int argc, const char* argv[]) {
   
   // memory info
   // int is stored in 4 bytes
@@ -229,7 +235,11 @@ int a_main(int argc, const char* argv[]) {
   free(iarr2str);
   free(iarr_str);
   free(farr_str);
+  
+  printf("review is complete!\n\n");
+
   return 0;
   
-
 }
+
+#endif

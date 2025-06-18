@@ -1,4 +1,5 @@
-#include "stacks.h"
+#include "define_main.h"
+#include "fixed_stacks.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,6 +16,8 @@
 //   types
 STACK(long)
 STACK(double)
+
+#ifdef FIXED_STACKS
 
 int main(int argc, char** argv) {
 
@@ -163,7 +166,9 @@ int main(int argc, char** argv) {
   is->remove(is);
   is = NULL;
   
-  printf("All tests pass!\n");
+  printf("All fixed_stacks tests pass!\n");
   printf("\n");
   return 0;
 }
+
+#endif

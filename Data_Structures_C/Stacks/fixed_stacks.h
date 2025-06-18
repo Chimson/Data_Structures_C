@@ -1,5 +1,5 @@
-#ifndef _STACKS_H
-#define _STACKS_H 1
+#ifndef _FIXED_STACKS_H
+#define _FIXED_STACKS_H 
 
 #include <stdlib.h>
 

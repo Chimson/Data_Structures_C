@@ -1,8 +1,8 @@
-#ifndef _STACKS_C
-#define _STACKS_C 1
+#ifndef _FIXED_STACKS_C
+#define _FIXED_STACKS_C 
 
 #include <stdlib.h>
-#include "stacks.h"
+#include "fixed_stacks.h"
 
 
 // when the pointers haven't moved
