@@ -17,7 +17,7 @@
 STACK(long)
 STACK(double)
 
-#ifdef FIXED_STACKS
+#ifdef FIXED_STACKS_MAIN
 
 int main(int argc, char** argv) {
 

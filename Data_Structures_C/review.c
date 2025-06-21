@@ -107,7 +107,7 @@ static void IntArraySetInitFields(IntArray* ia) {
 // you can only have one main function
 // However I use define_main.h to conditionally compile the individual main
 
-#ifdef REVIEW
+#ifdef REVIEW_MAIN
 
 int main(int argc, const char* argv[]) {
   
