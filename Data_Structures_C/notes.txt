@@ -2,6 +2,16 @@ TODO:
   
 COMPILATION:
 I control which main file is visible through define_main.h, see the file
+You can find the binary in XCOSE by going to the project navigator
+  at the bottom is the binary, right click > show in Finder
+  at the bottom right, right click > copy as pathname
+
+MEMORY LEAKS
+use the zsh command line "leaks" tool
+run:
+% cd
+  /Users/benharki/Library/Developer/Xcode/DerivedData/Data_Structures_C-cigihujjgmcqyzbnhasuwqlbgnfb/Build/Products/Debug
+% leaks --quiet --atExit -- ./Data_Structures_C
 
 XCODE:
 You have to pick one file with a main() function to run
@@ -59,6 +69,20 @@ Remarks about generic types:
       to write, but would make the functions called on the struct
       difficult to call with tests, since they would have different
         names per type
+
+TESTING
+My Testing philosopy is to exhaustively check the state of
+  each structure at specific points with small examples
+It should check the state at least once after each
+  execution branch finishes for each of its functions
+I am assuming that if a bug is found in a more complex
+   usage of a structure that it would hopefully be found
+   first in one of the small tests
+Each test does not create a seperate structure obj to test,
+  rather it tests one (or a few) as it changes over
+  time, when they are set up for the next test
+It takes too much time to test very complex examples with
+  large structures
 
 TEXT NOTES
 

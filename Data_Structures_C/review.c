@@ -229,12 +229,25 @@ int main(int argc, const char* argv[]) {
            
   printf("\n");
   
-  // only free pointers that have been directly returned from malloc
-  // free most nested allocation, then parent, etc.
+  
+  // MANAGING MEMORY TIPS
+  // malloc() could return NULL, so you may need to check before using a pointer returned
+  //   by it
+  // only free pointers that have been directly returned from malloc, do not free offsets
+  // free most nested (seperate) allocation, then parent, etc.
+  // also set the freed pointers to NULL to avoid dangling pointers
+  //   once a pointer is freed, the data it points to is garbage and possibly changed
+  //   be careful with free() in a loop
+  // do not call free twice, its an undefined behavior
   free(iarr2_ptr->arr);
   free(iarr2str);
   free(iarr_str);
   free(farr_str);
+  iarr2_ptr = NULL;
+  iarr2str = NULL;
+  iarr_str = NULL;
+  farr_str = NULL;
+  
   
   printf("review is complete!\n\n");
 

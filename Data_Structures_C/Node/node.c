@@ -21,11 +21,11 @@ node* nmng_get_node(node_memory* nm) {
     // add to the list to destroy, newest on top
     node* oldmallocs = nm->mallocs;
     nm->mallocs = (nm->cur_block)++;
-    nm->mallocs->item = nm->mallocs;
+    nm->mallocs->item = (void*) nm->mallocs;
     nm->mallocs->next = oldmallocs;
     
-    ret_node = nm->cur_block;
-    nm->nodes_left = BLOCKSIZE - 1;
+    ret_node = (nm->cur_block)++;
+    nm->nodes_left = BLOCKSIZE - 2;  // header node and the returned node are gone
   }
   // whenever there are nodes on the free list
   else {
@@ -57,10 +57,22 @@ node_memory* init_node_memory(void) {
   // set function pointers
   nm->get_node = nmng_get_node;
   nm->return_node = nmng_return_node;
+  nm->destroy = nmng_destroy;
   return nm;
 }
 
-
+void nmng_destroy(node_memory* nm) {
+  // free all the allocations
+  // freeing each cur's node, loses its next, so remember it before free
+  // also each first node of a block contains its own address for the
+  //     whole block to be used on free
+  for (node* cur = nm->mallocs; cur != NULL; ) {
+    node* next = cur->next;
+    free(cur->item);   // lose cur
+    cur = next;
+  }
+  free(nm);
+}
 
 
 #endif
