@@ -1,4 +1,6 @@
 TODO:
+  finished the linked_stack with the header node
+    also uses the get_node and return_node
   
 COMPILATION:
 I control which main file is visible through define_main.h, see the file
@@ -14,11 +16,9 @@ run:
 % leaks --quiet --atExit -- ./Data_Structures_C
 
 XCODE:
-You have to pick one file with a main() function to run
-The other main functions are renamed file_main()
-  when they are not currently used to test
-Any new main functions need to have Data_Structures_C selected as the target binary
-  you can do this in the top right icon, select Target Membership
+Any new main functions need to have Data_Structures_C selected as the
+  target binary
+you can do this in the top right icon, select Target Membership to be the Data_Stuctures_C binary
 
 
 Remarks about generic types:
@@ -138,3 +138,46 @@ as a dynamically allocated linked list:
       otherwise get a new memory block with malloc and create a node
     can use a valid integer flag to determine whether it has been
       recieved back by return_node or given out by get_node  
+first linked list version:
+  uses get_node and return_node to replace malloc an free 
+  there is a header node that serves as a stack identifier
+    an unchanged by all stack operations
+  remove_stack should return all remaining nodes
+  avoids stack overflow and no need to predict the array 
+    size in the array version
+  disadvantage in dereferenceing a pointer to anywhere
+    which could lead to cache misses
+    array version does not have this disadvantage, works well
+      with the cache,
+    prefer the array version if you are certain on the max size
+linked list of blocks version:
+  combines advantages of linked list and array version of stack
+  this is basically a linked list of arrays, stack size based
+    on the array storage
+  once its depleted allocate another array and connect to the filled one
+    in a linked list
+  one disadvantage of this version is when there are many push/pops over
+    a block boundary, forcing many frees and mallocs
+  I did not do this version
+My intermediate layer and node  
+  I did create the intermediate layer of nodes with get_node and return_node
+  I modified this to allocate more space of BLOCKSIZE if its needed
+  If BLOCKSIZE isn't big enough it could malloc many times
+  It only calls destroy once, but that could free many blocks of BLOCKSIZE
+  Would be best to make each node contain some item value, rather 
+    than a void pointer to some other location to take advantage of cache hits
+  this is my version of the combined advantages of the array and
+    linked list version
+My stack implementations from 1.1
+  fixed_stack: these are array versions of the stack
+    one is set to a type, the other is more generic using void* and char*
+  node: node and intermediate layer to get and return nodes, reducing malloc 
+      and free calls for the linked list version
+    could maybe make node a better generic using unsigned char* instead of 
+      void*, like I did with generic_stack?
+        prob not: if the item is a string then the item is a pointer anyways
+          other types could be done this way
+    might still get cache savings if the void* items points to
+      many items that were alloced in a buffer together
+    makes all read and write on the items a loop on each char byte
+    

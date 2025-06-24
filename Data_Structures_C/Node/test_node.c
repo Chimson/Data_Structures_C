@@ -43,9 +43,9 @@ int main(int argc, char** argv) {
   
   // make a linked list of size 2
   node* first = node1;
-  node1->item = (void*) "Ben";
+  node1->item = "Ben";
   node1->next = node2;
-  node2->item = (void*) "Mags";
+  node2->item = "Mags";
   assert(node2->next == NULL);
   
   // return_node
@@ -147,7 +147,7 @@ int main(int argc, char** argv) {
   nm->destroy(nm);
   nm = NULL;
   
-  
+  char c[]= "csdfsf";
   
   
   

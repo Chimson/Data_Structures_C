@@ -1,8 +1,9 @@
 #ifndef _NODE_H
 #define _NODE_H
 
-#define BLOCKSIZE 3
+#define BLOCKSIZE 256
 
+// could use char* and read and write to the item directly in the node
 typedef struct nd {
   void* item;
   struct nd* next;
