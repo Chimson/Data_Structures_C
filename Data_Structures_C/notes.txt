@@ -81,6 +81,8 @@ I am assuming that if a bug is found in a more complex
 Each test does not create a seperate structure obj to test,
   rather it tests one (or a few) as it changes over
   time, when they are set up for the next test
+Could also check a function applied to multiple cases
+  but only check the state of the structure once afterwards
 It takes too much time to test very complex examples with
   large structures
 
