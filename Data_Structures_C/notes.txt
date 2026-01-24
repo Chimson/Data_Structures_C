@@ -4,7 +4,7 @@ TODO:
   
 COMPILATION:
 I control which main file is visible through define_main.h, see the file
-You can find the binary in XCOSE by going to the project navigator
+You can find the binary in XCODE by going to the project navigator
   at the bottom is the binary, right click > show in Finder
   at the bottom right, right click > copy as pathname
 
