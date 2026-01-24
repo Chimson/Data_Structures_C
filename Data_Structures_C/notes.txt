@@ -7,6 +7,7 @@ I control which main file is visible through define_main.h, see the file
 You can find the binary in XCODE by going to the project navigator
   at the bottom is the binary, right click > show in Finder
   at the bottom right, right click > copy as pathname
+XCode will also find any C files in subfolders without pathing to them in includes
 
 MEMORY LEAKS
 use the zsh command line "leaks" tool

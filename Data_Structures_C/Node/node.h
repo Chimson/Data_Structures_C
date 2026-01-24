@@ -30,3 +30,4 @@ void nmng_return_node(node_memory* nm, node* nd);
 void nmng_destroy(node_memory* nm);
 
 #endif
+
