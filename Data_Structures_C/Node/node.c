@@ -39,7 +39,7 @@ node* nmng_get_node(node_memory* nm) {
   return ret_node;
 }
 
-// add return the node to the free list
+// return the node to the free list
 void nmng_return_node(node_memory* nm, node* nd) {
   nd->next = nm->free_list;
   nm->free_list = nd;
@@ -47,7 +47,7 @@ void nmng_return_node(node_memory* nm, node* nd) {
 
 // make the first node save its pointer to free later
 node_memory* init_node_memory(void) {
-  node_memory* nm = malloc(sizeof(node_memory));
+  node_memory* nm = (node_memory*) malloc(sizeof(node_memory));
   nm->cur_block = (node*) malloc(BLOCKSIZE * sizeof(node));
   nm->mallocs = (nm->cur_block)++;
   nm->mallocs->item = (void*) nm->mallocs;

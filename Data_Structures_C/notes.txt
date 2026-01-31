@@ -1,6 +1,9 @@
 TODO:
-  finished the linked_stack with the header node
-    also uses the get_node and return_node
+  finish the linked_stack
+  uses the memory manager in linked_stack
+  bc of the way I defined the node to have a char[] item
+    it fucks the memory manager code
+  need to fix this
   
 COMPILATION:
 I control which main file is visible through define_main.h, see the file
@@ -17,7 +20,7 @@ run:
 % leaks --quiet --atExit -- ./Data_Structures_C
 
 XCODE:
-Any new main functions need to have Data_Structures_C selected as the
+Any new C files MUST have Data_Structures_C selected as the
   target binary
 you can do this in the top right icon, select Target Membership to be the Data_Stuctures_C binary
 
@@ -70,6 +73,9 @@ Remarks about generic types:
       to write, but would make the functions called on the struct
       difficult to call with tests, since they would have different
         names per type
+    May need to be careful of name collision across files
+      Xcode seems to collide names across files for structs and
+        typedefs if they are included
 
 TESTING
 My Testing philosopy is to exhaustively check the state of
@@ -183,4 +189,8 @@ My stack implementations from 1.1
     might still get cache savings if the void* items points to
       many items that were alloced in a buffer together
     makes all read and write on the items a loop on each char byte
+    Linked data structures will have their own Node and memory managers
+      since this is more of a prototype
+      each structure can have their own type of node
+      
     

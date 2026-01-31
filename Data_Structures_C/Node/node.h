@@ -1,6 +1,7 @@
 #ifndef _NODE_H
 #define _NODE_H
 
+// node manager adds new blocks of BLOCKSIZE as needed
 #define BLOCKSIZE 3
 
 // could use char* and read and write to the item directly in the node
@@ -8,6 +9,8 @@ typedef struct nd {
   void* item;
   struct nd* next;
 } node;
+
+
 
 // intermediate layer to manage memory for nodes
 typedef struct nmng {

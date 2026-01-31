@@ -16,7 +16,7 @@ int main(int argc, char** argv) {
   
   // init_node_memory
   node_memory* nm = init_node_memory();
-  assert(nm->nodes_left == 2);
+  assert(nm->nodes_left == 499);
   assert(nm->free_list == NULL);
   assert(nm->mallocs == nm->cur_block - 1);
   assert(nm->mallocs->item == nm->mallocs);
