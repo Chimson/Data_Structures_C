@@ -21,7 +21,7 @@ node* nmng_get_node(node_memory* nm) {
     // add to the list to destroy, newest on top
     node* oldmallocs = nm->mallocs;
     nm->mallocs = (nm->cur_block)++;
-    nm->mallocs->item = (void*) nm->mallocs;
+    nm->mallocs->item = (ITYPE) nm->mallocs;  // since nodes are ITYPE for linked stack
     nm->mallocs->next = oldmallocs;
     
     ret_node = (nm->cur_block)++;
@@ -50,7 +50,7 @@ node_memory* init_node_memory(void) {
   node_memory* nm = (node_memory*) malloc(sizeof(node_memory));
   nm->cur_block = (node*) malloc(BLOCKSIZE * sizeof(node));
   nm->mallocs = (nm->cur_block)++;
-  nm->mallocs->item = (void*) nm->mallocs;
+  nm->mallocs->item = (ITYPE) nm->mallocs;
   nm->nodes_left = BLOCKSIZE - 1;
   nm->free_list = NULL;
   

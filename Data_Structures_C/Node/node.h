@@ -3,14 +3,12 @@
 
 // node manager adds new blocks of BLOCKSIZE as needed
 #define BLOCKSIZE 3
+#define ITYPE char*  // node item type
 
-// could use char* and read and write to the item directly in the node
 typedef struct nd {
-  void* item;
+  ITYPE item;
   struct nd* next;
 } node;
-
-
 
 // intermediate layer to manage memory for nodes
 typedef struct nmng {
@@ -18,7 +16,6 @@ typedef struct nmng {
   int nodes_left;    // nodes left in the block
   node* free_list;   // freed nodes, that were once in the block
   node* mallocs;     // holds blocks that need freed on destroy
-  
   
   // function pointers
   node* (*get_node)(struct nmng* nmem);

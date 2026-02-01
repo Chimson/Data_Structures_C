@@ -1,10 +1,7 @@
 TODO:
-  finish the linked_stack
-  uses the memory manager in linked_stack
-  bc of the way I defined the node to have a char[] item
-    it fucks the memory manager code
-  need to fix this
-  
+Implement linked_stack files since the node memory manager is set up
+  and passes tests
+
 COMPILATION:
 I control which main file is visible through define_main.h, see the file
 You can find the binary in XCODE by going to the project navigator
@@ -178,7 +175,7 @@ My intermediate layer and node
   this is my version of the combined advantages of the array and
     linked list version
 My stack implementations from 1.1
-  fixed_stack: these are array versions of the stack
+  fixed_stacks: these are array versions of the stack
     one is set to a type, the other is more generic using void* and char*
   node: node and intermediate layer to get and return nodes, reducing malloc 
       and free calls for the linked list version
@@ -192,5 +189,20 @@ My stack implementations from 1.1
     Linked data structures will have their own Node and memory managers
       since this is more of a prototype
       each structure can have their own type of node
-      
+  linked_stack
+    Regular linked list implementation, uses a node memory manager
+    item data for each node is not embedded in the node
+      since the data is a string, and strings can vary in size
+      other types might benefit in cache hits if the item data is
+        embedded in the node rather than the node containing item pointer
+      if the data is embedded in the node then you have to
+        change the node memory manager's malloc blocks linked list
+        it takes the first node of the malloced nodes block
+      may help cache if all the strings are a part of a large malloc block
+    You can #include "linked_stack.h" in test_node.c to test
+        its memory manager directly with its already written tests
+      You only need to change its 2 calls to lstack_init_node_memory()
+        could write a macro to do this more easily or even make the constructor
+          a struct function to avoid collision
+    
     

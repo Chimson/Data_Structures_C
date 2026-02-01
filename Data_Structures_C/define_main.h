@@ -7,6 +7,7 @@
 // can choose from REVIEW_MAIN, FIXED_STACKS_MAIN, NODE_MAIN
 //   LINKED_STACK_MAIN
 
+// #define NODE_MAIN
 #define LINKED_STACK_MAIN
 
 #endif

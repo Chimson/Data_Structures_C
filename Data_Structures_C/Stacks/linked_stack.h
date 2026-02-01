@@ -6,12 +6,11 @@
 
 // ----- Node and Memory manager -----
 
-#define TYPE char
-#define SSIZE 10   // size for num of chars embedded in node
 #define BLOCKSIZE 50
+#define ITYPE char*  // node item type
 
 typedef struct nd {
-  TYPE item[SSIZE];
+  ITYPE item;
   struct nd* next;
 } node;
 
@@ -29,10 +28,10 @@ typedef struct nmng {
 } node_memory;
 
 // forward declarations
-node_memory* init_node_memory(void);
-node* nmng_get_node(node_memory* nmem);
-void nmng_return_node(node_memory* nm, node* nd);
-void nmng_destroy(node_memory* nm);
+node_memory* lstack_init_node_memory(void);
+node* lstack_nmng_get_node(node_memory* nmem);
+void lstack_nmng_return_node(node_memory* nm, node* nd);
+void lstack_nmng_destroy(node_memory* nm);
 
 // -----
 

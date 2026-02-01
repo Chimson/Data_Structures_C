@@ -6,7 +6,7 @@
 
 // ----- Node and Memory manager definitions -----
 
-node* nmng_get_node(node_memory* nm) {
+node* lstack_nmng_get_node(node_memory* nm) {
   node* ret_node;
  
   // free list is empty, but more on the block
@@ -22,7 +22,7 @@ node* nmng_get_node(node_memory* nm) {
     // add to the list to destroy, newest on top
     node* oldmallocs = nm->mallocs;
     nm->mallocs = (nm->cur_block)++;
-    nm->mallocs->item = (void*) nm->mallocs;
+    nm->mallocs->item = (ITYPE) nm->mallocs;  // since nodes are ITYPE for linked stack
     nm->mallocs->next = oldmallocs;
     
     ret_node = (nm->cur_block)++;
@@ -41,28 +41,28 @@ node* nmng_get_node(node_memory* nm) {
 }
 
 // return the node to the free list
-void nmng_return_node(node_memory* nm, node* nd) {
+void lstack_nmng_return_node(node_memory* nm, node* nd) {
   nd->next = nm->free_list;
   nm->free_list = nd;
 }
 
 // make the first node save its pointer to free later
-node_memory* init_node_memory(void) {
+node_memory* lstack_init_node_memory(void) {
   node_memory* nm = (node_memory*) malloc(sizeof(node_memory));
   nm->cur_block = (node*) malloc(BLOCKSIZE * sizeof(node));
   nm->mallocs = (nm->cur_block)++;
-  nm->mallocs->item = (void*) nm->mallocs;
+  nm->mallocs->item = (ITYPE) nm->mallocs;
   nm->nodes_left = BLOCKSIZE - 1;
   nm->free_list = NULL;
   
   // set function pointers
-  nm->get_node = nmng_get_node;
-  nm->return_node = nmng_return_node;
-  nm->destroy = nmng_destroy;
+  nm->get_node = lstack_nmng_get_node;
+  nm->return_node = lstack_nmng_return_node;
+  nm->destroy = lstack_nmng_destroy;
   return nm;
 }
 
-void nmng_destroy(node_memory* nm) {
+void lstack_nmng_destroy(node_memory* nm) {
   // free all the allocations
   // freeing each cur's node, loses its next, so remember it before free
   // also each first node of a block contains its own address for the

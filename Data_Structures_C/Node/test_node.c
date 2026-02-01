@@ -16,10 +16,10 @@ int main(int argc, char** argv) {
   
   // init_node_memory
   node_memory* nm = init_node_memory();
-  assert(nm->nodes_left == 499);
+  assert(nm->nodes_left == 2);
   assert(nm->free_list == NULL);
   assert(nm->mallocs == nm->cur_block - 1);
-  assert(nm->mallocs->item == nm->mallocs);
+  assert(nm->mallocs->item == (ITYPE) nm->mallocs);  //to node item type
   assert(nm->mallocs->next == NULL);
   
   // get_node first condition
@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
   assert(nm->nodes_left == 1);
   assert(nm->free_list == NULL);
   assert(nm->mallocs == nm->cur_block - 2);
-  assert(nm->mallocs->item == nm->mallocs);
+  assert(nm->mallocs->item == (ITYPE) nm->mallocs);
   assert(nm->mallocs->next == NULL);
   node* node2 = nm->get_node(nm);
   assert(node2->item == NULL);
@@ -40,7 +40,7 @@ int main(int argc, char** argv) {
   assert(nm->nodes_left == 0);
   assert(nm->free_list == NULL);
   assert(nm->mallocs == nm->cur_block - 3);
-  assert(nm->mallocs->item == nm->mallocs);
+  assert(nm->mallocs->item == (ITYPE) nm->mallocs);
   assert(nm->mallocs->next == NULL);
   // block is maxed out
   
@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
   assert(nm->free_list == node1);
   assert(nm->free_list->next == NULL);
   assert(nm->mallocs == nm->cur_block - 3);
-  assert(nm->mallocs->item == nm->mallocs);
+  assert(nm->mallocs->item == (ITYPE) nm->mallocs);
   assert(nm->mallocs->next == NULL);
   
   // get_node third condition, when cur_block maxed out
@@ -72,7 +72,7 @@ int main(int argc, char** argv) {
   assert(nm->nodes_left == 0);
   assert(nm->free_list == NULL);   // taken from the free_list
   assert(nm->mallocs == nm->cur_block - 3);
-  assert(nm->mallocs->item == nm->mallocs);
+  assert(nm->mallocs->item == (ITYPE) nm->mallocs);
   assert(nm->mallocs->next == NULL);
  
   // (return_node already checked)
@@ -84,7 +84,7 @@ int main(int argc, char** argv) {
   assert(nm->nodes_left == 0);
   assert(nm->free_list == node2);
   assert(nm->mallocs == nm->cur_block - 3);
-  assert(nm->mallocs->item == nm->mallocs);
+  assert(nm->mallocs->item == (ITYPE) nm->mallocs);
   assert(nm->mallocs->next == NULL);
   
   // check destroy
@@ -106,7 +106,7 @@ int main(int argc, char** argv) {
   assert(nm->nodes_left == 0);
   assert(nm->free_list == NULL);
   assert(nm->mallocs == nm->cur_block - 3);
-  assert(nm->mallocs->item == nm->mallocs);
+  assert(nm->mallocs->item == (ITYPE) nm->mallocs);
   assert(nm->mallocs->next == NULL);
   // block maxed out
   
@@ -120,9 +120,9 @@ int main(int argc, char** argv) {
   assert(nm->nodes_left == 1);  // header and prev node are used
   assert(nm->free_list == NULL);
   assert(nm->mallocs == nm->cur_block - 2);
-  assert(nm->mallocs->item == nm->mallocs);
+  assert(nm->mallocs->item == (ITYPE) nm->mallocs);
   assert(nm->mallocs->next == node1 - 1);  // remembers the old block
-  assert(nm->mallocs->next->item == nm->mallocs->next);
+  assert(nm->mallocs->next->item == (ITYPE) nm->mallocs->next);
   assert(nm->mallocs->next->next == NULL);
 
   // get_node third condition, when the block is not maxed out
@@ -136,9 +136,9 @@ int main(int argc, char** argv) {
   assert(nm->nodes_left == 1);  // still space left on the block
   assert(nm->free_list == NULL);
   assert(nm->mallocs == nm->cur_block - 2);
-  assert(nm->mallocs->item == nm->mallocs);
+  assert(nm->mallocs->item == (ITYPE) nm->mallocs);
   assert(nm->mallocs->next == node1 - 1);  // remembers the old block
-  assert(nm->mallocs->next->item == nm->mallocs->next);
+  assert(nm->mallocs->next->item == (ITYPE) nm->mallocs->next);
   assert(nm->mallocs->next->next == NULL);
   
   // clean up the ptr variables and destroy the node manager
@@ -149,15 +149,6 @@ int main(int argc, char** argv) {
   node4 = NULL;  // alias to node3
   nm->destroy(nm);
   nm = NULL;
-  
-  char c[]= "csdfsf";
-  
-  
-  
-  
-  
-  
-  
    
   printf("All node tests pass!\n\n");
   return 0;
