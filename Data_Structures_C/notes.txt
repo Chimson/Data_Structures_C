@@ -1,6 +1,9 @@
 TODO:
 Implement linked_stack files since the node memory manager is set up
   and passes tests
+Add the node manager pointer to the linked stack struct
+Fix the global struct, function, and typedef names
+  USE MACROS?
 
 COMPILATION:
 I control which main file is visible through define_main.h, see the file
@@ -204,5 +207,8 @@ My stack implementations from 1.1
       You only need to change its 2 calls to lstack_init_node_memory()
         could write a macro to do this more easily or even make the constructor
           a struct function to avoid collision
-    
+    Each structure needs its own memory manager for cache benefits
+      even if they share they same type of node, like a single linked node
+      however beware of typedef and struct name collision
+        need to clean up the global struct, function, typedef names
     

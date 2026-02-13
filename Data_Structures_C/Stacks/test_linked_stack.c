@@ -9,11 +9,11 @@
 
 int main(int argc, char** argv) {
   
-  // ===== node memory manager check =====
+  // ===== NODE MEMORY MANAGER CHECK =====
   
   // ITYPE is char*
   assert(BLOCKSIZE == 50);
-  node_memory* nm = lstack_init_node_memory();
+  ls_node_memory* nm = init_ls_node_memory();
   
   // char[] will include the \0 and sizeof() counts it
   // memcpy copies exactly the num of bytes no matter the \0
@@ -23,15 +23,15 @@ int main(int argc, char** argv) {
   char tempdata[] = "\0Ben\0Mags\0CheeseWeazel";  // temporarily on the stack
   memcpy(sdata, tempdata, sizeof(tempdata));
   
-  node* n0 = nm->get_node(nm);
-  node* n1 = nm->get_node(nm);
-  node* n2 = nm->get_node(nm);
+  ls_node* n0 = nm->get_node(nm);
+  ls_node* n1 = nm->get_node(nm);
+  ls_node* n2 = nm->get_node(nm);
   
-  node* nodes[] = {n0, n1, n2};  // temporarily on the stack
+  ls_node* nodes[] = {n0, n1, n2};  // temporarily on the stack
   
   char* cur = tempdata;
   int nctr = 0;
-  while (nctr < sizeof(nodes)/sizeof(node*)) {  // sizeof only return bytes
+  while (nctr < sizeof(nodes)/sizeof(ls_node*)) {  // sizeof only return bytes
     if (*cur == '\0') {
       nodes[nctr++]->item = cur + 1;
     }
@@ -72,6 +72,8 @@ int main(int argc, char** argv) {
   
   printf("All linked stack tests pass!\n\n");
   return 0;
+  
+  // ===== END NODE MEMORY MANAGER CHECK =====
   
 }
 
