@@ -4,6 +4,7 @@ Implement linked_stack files since the node memory manager is set up
 Add the node manager pointer to the linked stack struct
 Fix the global struct, function, and typedef names
   USE MACROS?
+AI says use intrusive linked structures, is mine intrusive?
 
 COMPILATION:
 I control which main file is visible through define_main.h, see the file
